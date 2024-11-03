@@ -1,11 +1,19 @@
-from camera_feed import CameraFeed
+from camera_feed import CameraFeed  # Save the above code as camera_feed.py and import it here
 import time
 
-camera = CameraFeed()
+# Initialize the camera feed
+camera_feed = CameraFeed()
 
 try:
     while True:
-        camera.capture_and_find_pink()
+        # Capture an image
+        image = camera_feed.take_pic()
+        # Detect and mark the fluorescent pink object
+        x, y, area = camera_feed.find_ball(image)
+        print(f"Coordinates: ({x}, {y}), Area: {area}")
         time.sleep(0.1)  # Adjust the delay as needed
+
 except KeyboardInterrupt:
-    camera.clean_up()
+    print("Stopping camera feed...")
+    camera_feed.close_cam()
+
